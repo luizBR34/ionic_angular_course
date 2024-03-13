@@ -1,0 +1,26 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3" no-padding>
+        <ion-card *ngIf="loadedRecipe.imageUrl">
+          <ion-card-header color="primary">
+            <ion-card-title>{{ loadedRecipe.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-img [src]="loadedRecipe.imageUrl"></ion-img>
+            <ion-item>
+              <h1>{{ loadedRecipe.title }}</h1>
+            </ion-item>
+            <ion-item>
+              <ion-list>
+                <ion-item *ngFor="let ig of loadedRecipe.ingredients">
+                  {{ ig }}
+                </ion-item>
+              </ion-list>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
