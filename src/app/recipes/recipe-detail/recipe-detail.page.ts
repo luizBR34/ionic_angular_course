@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../recipes.service';
-import { Recipe, RecipeImpl } from '../recipe.model';
+import { RecipeImpl } from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,7 +13,8 @@ export class RecipeDetailPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private recipesService: RecipesService
+    private recipesService: RecipesService,
+    private router: Router
   ) {
     this.loadedRecipe = new RecipeImpl();
   }
@@ -23,7 +24,8 @@ export class RecipeDetailPage implements OnInit {
       if (paramMap.has('recipeId')) {
         const recipeId = paramMap.get('recipeId');
         if (recipeId !== null) {
-          this.loadedRecipe.id = this.recipesService.getRecipe(recipeId).id ?? '';
+          this.loadedRecipe.id =
+            this.recipesService.getRecipe(recipeId).id ?? '';
           this.loadedRecipe.title =
             this.recipesService.getRecipe(recipeId).title ?? '';
           this.loadedRecipe.imageUrl =
@@ -34,5 +36,10 @@ export class RecipeDetailPage implements OnInit {
       }
       return;
     });
+  }
+
+  onDeleteRecipe() {
+    this.recipesService.deleteRecipe(this.loadedRecipe.id);
+    this.router.navigate(['/recipes']);
   }
 }
